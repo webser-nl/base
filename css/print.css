@@ -1,0 +1,83 @@
+/**
+ * @file
+ * Print styles for Webser Base theme.
+ */
+
+/* Hide non-essential elements when printing */
+@media print {
+  /* Hide navigation, sidebars, and interactive elements */
+  .site-header,
+  .primary-navigation,
+  .secondary-navigation,
+  .sidebar,
+  .breadcrumb,
+  .tabs,
+  .action-links,
+  .contextual-links-wrapper,
+  .block--local-tasks-block,
+  footer,
+  .back-to-top,
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+
+  /* Reset page margins */
+  @page {
+    margin: 2cm;
+  }
+
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+
+  /* Ensure links show their URLs */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+  }
+
+  /* Don't show URLs for internal links */
+  a[href^="#"]:after,
+  a[href^="/"]:after {
+    content: "";
+  }
+
+  /* Better image handling */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Avoid page breaks inside important elements */
+  h1, h2, h3, h4, h5, h6,
+  p, blockquote, pre,
+  ul, ol, dl {
+    page-break-inside: avoid;
+  }
+
+  /* Ensure headings stay with following content */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  /* Make tables print better */
+  table {
+    border-collapse: collapse;
+  }
+
+  th, td {
+    border: 1px solid #000;
+    padding: 0.5em;
+  }
+
+  /* Show content in full width */
+  .container,
+  .layout__content {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}

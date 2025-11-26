@@ -1,0 +1,166 @@
+/**
+ * @file
+ * Admin/backend styles for Webser Base theme.
+ */
+
+/* Fixed local tasks with icons (bottom right) */
+.backend-node .block--local-tasks-block,
+.is-admin-node .block--local-tasks-block {
+  position: fixed;
+  z-index: 999;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 5px 0 0 0;
+  padding: 5px 10px 5px 5px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.backend-node .block--local-tasks-block .contextual,
+.is-admin-node .block--local-tasks-block .contextual {
+  display: none;
+}
+
+.backend-node .block--local-tasks-block .container,
+.is-admin-node .block--local-tasks-block .container {
+  padding: 0;
+}
+
+.backend-node .block--local-tasks-block .nav-tabs,
+.is-admin-node .block--local-tasks-block .nav-tabs {
+  border: none;
+  margin: 0;
+}
+
+/* Icon styling for menu tabs */
+.backend-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon,
+.is-admin-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  margin: 0 0 0 5px;
+  border: none;
+  background-size: 24px auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+
+.backend-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-view,
+.is-admin-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-view {
+  background-image: url("../images/icons/view.svg");
+}
+
+.backend-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-edit,
+.is-admin-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-edit {
+  background-image: url("../images/icons/edit.svg");
+}
+
+.backend-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-delete,
+.is-admin-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-delete {
+  background-image: url("../images/icons/delete.svg");
+}
+
+.backend-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-layout,
+.is-admin-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-layout {
+  background-image: url("../images/icons/layout.svg");
+}
+
+.backend-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-history,
+.is-admin-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.icon-history {
+  background-image: url("../images/icons/history.svg");
+}
+
+.backend-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon:hover,
+.backend-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.is-active,
+.is-admin-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon:hover,
+.is-admin-node .block--local-tasks-block .nav-tabs .nav-item a.menu-icon.is-active {
+  opacity: 0.6;
+}
+
+/* Layout Builder form styling */
+form.layout-builder-form {
+  padding: 0;
+}
+
+form.layout-builder-form .form-item {
+  margin: 10px 0 0 0;
+}
+
+form.layout-builder-form .js-form-type-vertical-tabs {
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+/* Fixed save button */
+form.layout-builder-form .form-actions {
+  position: fixed;
+  z-index: 998;
+  bottom: -2px;
+  left: 0;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  border-radius: 0 5px 0 0;
+  padding: 15px;
+  font-size: 14px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+form.layout-builder-form .form-actions .button {
+  font-size: 14px;
+  padding: 10px;
+}
+
+/* Better spacing for admin forms */
+.is-admin .form-item {
+  margin-bottom: 1.5rem;
+}
+
+/* Local tasks (tabs) styling */
+.block--local-tasks-block {
+  margin-bottom: 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.tabs__tab {
+  margin: 0;
+}
+
+.tabs__link {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: #495057;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+.tabs__link:hover {
+  color: #0066cc;
+  background: #f8f9fa;
+}
+
+.tabs__link.is-active {
+  color: #0066cc;
+  border-bottom-color: #0066cc;
+  font-weight: 600;
+}
+
+/* Status messages in admin */
+.is-admin .messages {
+  margin-bottom: 2rem;
+}

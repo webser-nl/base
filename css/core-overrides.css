@@ -1,0 +1,58 @@
+/**
+ * @file
+ * Core Drupal CSS overrides for Webser Base theme.
+ */
+
+/* Remove some default Drupal styles that conflict with Bootstrap */
+
+/* Reset list styles on menus */
+.menu {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* Better status messages */
+.messages {
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Improve tabs appearance */
+.tabs--primary {
+  border-bottom: 2px solid #dee2e6;
+  margin-bottom: 2rem;
+  padding: 0;
+}
+
+/* Better table styling */
+.responsive-enabled table {
+  border: 1px solid #dee2e6;
+}
+
+/* Improve pager */
+.pager {
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.pager__items {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+}
+
+/* Better contextual links */
+.contextual {
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+/* Improve vertical tabs */
+.vertical-tabs {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+}
