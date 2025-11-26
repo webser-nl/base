@@ -1,0 +1,6 @@
+{
+  "name": "drupal/webser_base",
+  "type": "drupal-theme",
+  "description": "Webser base theme",
+  "license": "GPL-2.0-or-later"
+}
