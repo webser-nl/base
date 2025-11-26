@@ -58,8 +58,8 @@ forms:
 print:
   version: 2.0
   css:
-    print:
-      css/print.css: {}
+    theme:
+      css/print.css: { media: print }
 
 # Animation library (lazy loaded when needed)
 animations:
