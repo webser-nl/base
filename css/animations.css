@@ -1,0 +1,74 @@
+/**
+ * @file
+ * CSS animations for scroll effects.
+ */
+
+/* Base animation setup */
+[class*="animate-"] {
+  opacity: 0;
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+[class*="animate-"].is-visible {
+  opacity: 1;
+}
+
+/* Fade in */
+.animate-fade-in.is-visible {
+  animation: fadeIn var(--transition-slow) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide from left */
+.animate-slide-in-left {
+  transform: translateX(-50px);
+}
+
+.animate-slide-in-left.is-visible {
+  transform: translateX(0);
+}
+
+/* Slide from right */
+.animate-slide-in-right {
+  transform: translateX(50px);
+}
+
+.animate-slide-in-right.is-visible {
+  transform: translateX(0);
+}
+
+/* Slide from bottom */
+.animate-slide-in-up {
+  transform: translateY(50px);
+}
+
+.animate-slide-in-up.is-visible {
+  transform: translateY(0);
+}
+
+/* Scale in */
+.animate-scale-in {
+  transform: scale(0.9);
+}
+
+.animate-scale-in.is-visible {
+  transform: scale(1);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  [class*="animate-"] {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}

@@ -1,0 +1,122 @@
+/**
+ * @file
+ * CSS Custom Properties (variables) for Webser Base theme.
+ */
+
+:root {
+  /* Brand colors */
+  --color-primary: #0066cc;
+  --color-primary-dark: #004c99;
+  --color-primary-light: #3385d6;
+  --color-secondary: #6c757d;
+  --color-secondary-dark: #545b62;
+  --color-secondary-light: #868e96;
+
+  /* Semantic colors */
+  --color-success: #28a745;
+  --color-info: #17a2b8;
+  --color-warning: #ffc107;
+  --color-danger: #dc3545;
+
+  /* Grays */
+  --color-white: #ffffff;
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #ced4da;
+  --color-gray-500: #adb5bd;
+  --color-gray-600: #6c757d;
+  --color-gray-700: #495057;
+  --color-gray-800: #343a40;
+  --color-gray-900: #212529;
+  --color-black: #000000;
+
+  /* Typography */
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-serif: Georgia, "Times New Roman", Times, serif;
+  --font-family-mono: SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-base: 1.6;
+  --line-height-sm: 1.4;
+  --line-height-lg: 1.8;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  --spacing-4xl: 6rem;
+
+  /* Section padding */
+  --section-padding-y: var(--spacing-3xl);
+  --section-padding-y-sm: var(--spacing-2xl);
+
+  /* Borders */
+  --border-width: 1px;
+  --border-radius: 0.25rem;
+  --border-radius-sm: 0.125rem;
+  --border-radius-lg: 0.5rem;
+  --border-color: var(--color-gray-300);
+
+  /* Shadows */
+  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+
+  /* Z-index layers */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+
+  /* Layout */
+  --container-max-width: 1200px;
+  --container-padding: var(--spacing-md);
+  --header-height: 80px;
+}
+
+/* Responsive font sizes */
+@media (max-width: 768px) {
+  :root {
+    --font-size-base: 0.9375rem;
+    --section-padding-y: var(--spacing-2xl);
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Override colors for dark mode if needed */
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+  }
+}

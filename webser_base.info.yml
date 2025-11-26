@@ -1,0 +1,45 @@
+name: 'Webser Base'
+type: theme
+description: 'Modern, performance-optimized base theme for Webser projects with Bootstrap 5 and Layout Builder focus.'
+package: Webser
+core_version_requirement: ^10 || ^11
+version: '2.0.0'
+
+# No base theme for maximum control and performance
+base theme: false
+
+# Theme is intended as a base theme for subthemes
+hidden: false
+
+# Default libraries loaded on all pages
+libraries:
+  - webser_base/global
+
+# Libraries loaded in admin/edit pages
+libraries-override:
+  layout_builder/drupal.layout_builder:
+    css:
+      theme:
+        webser_base/layout-builder-admin: css/layout-builder-admin.css
+
+# Remove unwanted core CSS
+libraries-extend:
+  core/drupal:
+    - webser_base/core-overrides
+
+# Theme regions
+regions:
+  header_top: 'Header top'
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  breadcrumb: 'Breadcrumb'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  content: 'Main content'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer_first: 'Footer first column'
+  footer_second: 'Footer second column'
+  footer_third: 'Footer third column'
+  footer_bottom: 'Footer bottom'

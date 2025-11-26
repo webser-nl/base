@@ -1,0 +1,282 @@
+<?php
+
+/**
+ * @file
+ * Webser Base theme file.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Template\Attribute;
+
+/**
+ * Implements hook_preprocess_HOOK() for HTML.
+ */
+function webser_base_preprocess_html(array &$variables): void {
+  // Add front page class.
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
+    $variables['attributes']['class'][] = 'is-front';
+  }
+
+  // Add admin class and library.
+  if ($variables['is_admin'] ?? FALSE) {
+    $variables['attributes']['class'][] = 'is-admin';
+    $variables['#attached']['library'][] = 'webser_base/admin';
+
+    // Add specific class for node edit pages.
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node) {
+      $variables['attributes']['class'][] = 'is-admin-node';
+    }
+  }
+
+  // Add route-based classes.
+  $route = \Drupal::routeMatch()->getRouteName();
+  if ($route) {
+    $variables['attributes']['class'][] = 'route--' . str_replace('.', '-', $route);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page.
+ */
+function webser_base_preprocess_page(array &$variables): void {
+  // Make site config available to templates.
+  $siteConfig = \Drupal::config('system.site');
+  $variables['site_name'] = $siteConfig->get('name');
+  $variables['site_slogan'] = $siteConfig->get('slogan');
+  $variables['site_mail'] = $siteConfig->get('mail');
+
+  // Get logo URL.
+  $logoUrl = theme_get_setting('logo.url');
+  if ($logoUrl) {
+    $fileUrlGenerator = \Drupal::service('file_url_generator');
+    $variables['logo'] = $fileUrlGenerator->transformRelative(
+      $fileUrlGenerator->generateAbsoluteString($logoUrl)
+    );
+  }
+
+  // Make theme settings available.
+  $variables['theme_settings'] = [
+    'social_media' => _webser_base_get_social_media(),
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node.
+ */
+function webser_base_preprocess_node(array &$variables): void {
+  // Add node type class to title.
+  $variables['title_attributes']['class'][] = 'node__title';
+  $variables['title_attributes']['class'][] = 'node__title--' . $variables['node']->bundle();
+
+  // Add published/unpublished class.
+  $status = $variables['node']->isPublished() ? 'published' : 'unpublished';
+  $variables['attributes']['class'][] = 'node--' . $status;
+
+  // Add sticky class.
+  if ($variables['node']->isSticky()) {
+    $variables['attributes']['class'][] = 'node--sticky';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for block.
+ */
+function webser_base_preprocess_block(array &$variables): void {
+  // Add standard title class.
+  if (!empty($variables['label'])) {
+    $variables['title_attributes']['class'][] = 'block__title';
+  }
+
+  // Add block bundle class if available.
+  if (!empty($variables['elements']['content']['#block_content'])) {
+    $bundle = $variables['elements']['content']['#block_content']->bundle();
+    $variables['attributes']['class'][] = 'block--type-' . $bundle;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for field.
+ */
+function webser_base_preprocess_field(array &$variables): void {
+  $element = $variables['element'];
+
+  // Add field type class.
+  if (!empty($element['#field_type'])) {
+    $variables['attributes']['class'][] = 'field--type-' . $element['#field_type'];
+  }
+
+  // Add view mode class.
+  if (!empty($element['#view_mode'])) {
+    $variables['attributes']['class'][] = 'field--view-mode-' . $element['#view_mode'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for form elements.
+ */
+function webser_base_preprocess_form_element(array &$variables): void {
+  // Pass input type to label template.
+  if (!empty($variables['type'])) {
+    $variables['label']['#input_type'] = $variables['type'];
+  }
+
+  // Add Bootstrap classes.
+  if (in_array($variables['type'], ['textfield', 'email', 'tel', 'number', 'password', 'search', 'url'])) {
+    $variables['attributes']['class'][] = 'form-control';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for input elements.
+ */
+function webser_base_preprocess_input(array &$variables): void {
+  $type = $variables['element']['#type'] ?? NULL;
+
+  if ($type === 'submit') {
+    // Add Bootstrap button classes to submit buttons.
+    $variables['attributes']['class'][] = 'btn';
+    if (in_array('button--primary', $variables['attributes']['class'] ?? [])) {
+      $variables['attributes']['class'][] = 'btn-primary';
+    }
+    else {
+      $variables['attributes']['class'][] = 'btn-secondary';
+    }
+  }
+  elseif ($type === 'checkbox' || $type === 'radio') {
+    $variables['attributes']['class'][] = 'form-check-input';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for select elements.
+ */
+function webser_base_preprocess_select(array &$variables): void {
+  $variables['attributes']['class'][] = 'form-select';
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for textarea elements.
+ */
+function webser_base_preprocess_textarea(array &$variables): void {
+  $variables['attributes']['class'][] = 'form-control';
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for blocks.
+ */
+function webser_base_theme_suggestions_block_alter(array &$suggestions, array $variables): void {
+  $element = $variables['elements'];
+
+  // Suggest template based on block content type.
+  if (!empty($element['content']['#block_content'])) {
+    $bundle = $element['content']['#block_content']->bundle();
+    $suggestions[] = 'block__bundle__' . $bundle;
+  }
+
+  // Suggest template based on view name.
+  if (isset($element['content']['#type']) && $element['content']['#type'] === 'view') {
+    $viewName = $element['content']['#name'];
+    $displayId = $element['content']['#display_id'] ?? 'default';
+    $suggestions[] = 'block__view__' . $viewName;
+    $suggestions[] = 'block__view__' . $viewName . '__' . $displayId;
+  }
+
+  // Suggest template based on region.
+  if (!empty($element['#configuration']['region'])) {
+    $suggestions[] = 'block__region__' . $element['#configuration']['region'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for fields.
+ */
+function webser_base_theme_suggestions_field_alter(array &$suggestions, array $variables): void {
+  $element = $variables['element'];
+
+  // Add view mode to suggestions.
+  if (!empty($element['#view_mode'])) {
+    $suggestions[] = 'field__' . $element['#field_name'] . '__' . $element['#view_mode'];
+    $suggestions[] = 'field__' . $element['#entity_type'] . '__' . $element['#field_name'] . '__' . $element['#view_mode'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for forms.
+ */
+function webser_base_theme_suggestions_form_alter(array &$suggestions, array $variables): void {
+  if ($formId = $variables['element']['#form_id'] ?? NULL) {
+    $suggestions[] = 'form__' . $formId;
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function webser_base_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  // Add form ID as class.
+  $form['#attributes']['class'][] = 'form--' . str_replace('_', '-', $form_id);
+
+  // Attach form library to all forms.
+  $form['#attached']['library'][] = 'webser_base/forms';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for theme settings.
+ */
+function webser_base_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state): void {
+  // Social media settings.
+  $form['social_media'] = [
+    '#type' => 'details',
+    '#title' => t('Social media links'),
+    '#description' => t('Enter full URLs for your social media profiles.'),
+  ];
+
+  $socials = ['facebook', 'twitter', 'instagram', 'linkedin', 'youtube'];
+  foreach ($socials as $social) {
+    $form['social_media'][$social] = [
+      '#type' => 'url',
+      '#title' => ucfirst($social),
+      '#default_value' => theme_get_setting($social),
+      '#placeholder' => 'https://...',
+    ];
+  }
+
+  // Performance settings.
+  $form['performance'] = [
+    '#type' => 'details',
+    '#title' => t('Performance'),
+    '#description' => t('Performance optimization settings.'),
+  ];
+
+  $form['performance']['enable_animations'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable scroll animations'),
+    '#default_value' => theme_get_setting('enable_animations') ?? TRUE,
+  ];
+
+  $form['performance']['lazy_load_images'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable lazy loading for images'),
+    '#default_value' => theme_get_setting('lazy_load_images') ?? TRUE,
+  ];
+}
+
+/**
+ * Gets social media links from theme settings.
+ *
+ * @return array<string, string|null>
+ *   Social media URLs.
+ */
+function _webser_base_get_social_media(): array {
+  $socials = ['facebook', 'twitter', 'instagram', 'linkedin', 'youtube'];
+  $links = [];
+
+  foreach ($socials as $social) {
+    $links[$social] = theme_get_setting($social);
+  }
+
+  return array_filter($links);
+}

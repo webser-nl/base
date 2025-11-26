@@ -1,0 +1,143 @@
+{#
+/**
+ * @file
+ * Default page template.
+ *
+ * Available variables:
+ * - page: Render arrays for page regions.
+ * - logo: Logo path.
+ * - site_name: Site name.
+ * - site_slogan: Site slogan.
+ */
+#}
+<div class="page-wrapper">
+
+  {# Header #}
+  <header class="site-header" role="banner">
+    <div class="site-header__inner container">
+
+      {# Logo and site name #}
+      <div class="site-branding">
+        {% if logo %}
+          <a href="{{ path('<front>') }}" class="site-logo" rel="home">
+            <img src="{{ logo }}" alt="{{ 'Home'|t }}" loading="eager" />
+          </a>
+        {% endif %}
+
+        {% if site_name %}
+          <div class="site-name">
+            <a href="{{ path('<front>') }}" rel="home">{{ site_name }}</a>
+          </div>
+        {% endif %}
+      </div>
+
+      {# Primary navigation #}
+      {% if page.primary_menu %}
+        <nav class="primary-navigation" role="navigation" aria-label="{{ 'Main navigation'|t }}">
+          {{ page.primary_menu }}
+        </nav>
+      {% endif %}
+
+    </div>
+  </header>
+
+  {# Breadcrumbs #}
+  {% if page.breadcrumb %}
+    <div class="breadcrumb-wrapper">
+      <div class="container">
+        {{ page.breadcrumb }}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Highlighted region #}
+  {% if page.highlighted %}
+    <div class="region--highlighted">
+      <div class="container">
+        {{ page.highlighted }}
+      </div>
+    </div>
+  {% endif %}
+
+  {# Main content #}
+  <main class="main-content" role="main">
+    <a id="main-content" tabindex="-1"></a>
+
+    <div class="content-container">
+
+      {# Help region #}
+      {% if page.help %}
+        <div class="region region--help">
+          {{ page.help }}
+        </div>
+      {% endif %}
+
+      {# Determine layout based on sidebars #}
+      {% set layout_class = '' %}
+      {% if page.sidebar_first and page.sidebar_second %}
+        {% set layout_class = 'layout--both-sidebars' %}
+      {% elseif page.sidebar_first %}
+        {% set layout_class = 'layout--sidebar-first' %}
+      {% elseif page.sidebar_second %}
+        {% set layout_class = 'layout--sidebar-second' %}
+      {% endif %}
+
+      <div class="layout--with-sidebar {{ layout_class }}">
+        {% if page.sidebar_first %}
+          <aside class="sidebar sidebar--first" role="complementary">
+            {{ page.sidebar_first }}
+          </aside>
+        {% endif %}
+
+        <div class="main-content__inner">
+          {{ page.content }}
+        </div>
+
+        {% if page.sidebar_second %}
+          <aside class="sidebar sidebar--second" role="complementary">
+            {{ page.sidebar_second }}
+          </aside>
+        {% endif %}
+      </div>
+
+    </div>
+  </main>
+
+  {# Footer #}
+  <footer class="site-footer" role="contentinfo">
+    {% if page.footer_first or page.footer_second or page.footer_third %}
+      <div class="footer-top">
+        <div class="container">
+          <div class="footer-columns">
+            {% if page.footer_first %}
+              <div class="footer-column footer-column--first">
+                {{ page.footer_first }}
+              </div>
+            {% endif %}
+
+            {% if page.footer_second %}
+              <div class="footer-column footer-column--second">
+                {{ page.footer_second }}
+              </div>
+            {% endif %}
+
+            {% if page.footer_third %}
+              <div class="footer-column footer-column--third">
+                {{ page.footer_third }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if page.footer_bottom %}
+      <div class="footer-bottom">
+        <div class="container">
+          {{ page.footer_bottom }}
+        </div>
+      </div>
+    {% endif %}
+  </footer>
+
+</div>
